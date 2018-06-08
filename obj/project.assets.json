@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v2.1": {
+      "CommandLineParser.Core/1.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/CommandLineParser.Core.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/CommandLineParser.Core.dll": {}
+        }
+      },
       "Microsoft.NETCore.App/2.1.0": {
         "type": "package",
         "dependencies": {
@@ -207,10 +216,30 @@
         "build": {
           "build/netstandard2.0/NETStandard.Library.targets": {}
         }
+      },
+      "Rhetos.Utilities/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/Rhetos.Utilities.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Rhetos.Utilities.dll": {}
+        }
       }
     }
   },
   "libraries": {
+    "CommandLineParser.Core/1.0.1": {
+      "sha512": "eDbN61t7xnMggVWn+B2xo0DwtFIRPU7dWzxOwmyG2jVo9RhkTsnvPPVpxOzyAxVjvQik4+f5FhkDekEGoTe6iQ==",
+      "type": "package",
+      "path": "commandlineparser.core/1.0.1",
+      "files": [
+        "commandlineparser.core.1.0.1.nupkg.sha512",
+        "commandlineparser.core.nuspec",
+        "lib/netstandard2.0/CommandLineParser.Core.dll"
+      ]
+    },
     "Microsoft.NETCore.App/2.1.0": {
       "sha512": "AvT774nTFgU8cYcGO9j1EMwuayKslxqYTurg32HGpWa2hEYNuW2+XgYVVNcZe6Ndbr84QX6fwaOZfd5n+1m2OA==",
       "type": "package",
@@ -673,41 +702,54 @@
         "netstandard.library.2.0.3.nupkg.sha512",
         "netstandard.library.nuspec"
       ]
+    },
+    "Rhetos.Utilities/1.0.0": {
+      "type": "project",
+      "path": "Rhetos.Utilities/Rhetos.Utilities.csproj",
+      "msbuildProject": "Rhetos.Utilities/Rhetos.Utilities.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
-      "Microsoft.NETCore.App >= 2.1.0"
+      "CommandLineParser.Core",
+      "Microsoft.NETCore.App >= 2.1.0",
+      "Rhetos.Utilities >= 1.0.0"
     ]
   },
   "packageFolders": {
-    "/home/jon/.nuget/packages/": {},
-    "/usr/share/dotnet/sdk/NuGetFallbackFolder": {}
+    "C:\\Users\\bil8068\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/jon/Source/dvgen/dvgen.csproj",
+      "projectUniqueName": "C:\\Users\\bil8068\\OneDrive - HCA Healthcare\\Projects\\dvgen\\dvgen.csproj",
       "projectName": "dvgen",
-      "projectPath": "/home/jon/Source/dvgen/dvgen.csproj",
-      "packagesPath": "/home/jon/.nuget/packages/",
-      "outputPath": "/home/jon/Source/dvgen/obj/",
+      "projectPath": "C:\\Users\\bil8068\\OneDrive - HCA Healthcare\\Projects\\dvgen\\dvgen.csproj",
+      "packagesPath": "C:\\Users\\bil8068\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\bil8068\\OneDrive - HCA Healthcare\\Projects\\dvgen\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "/usr/share/dotnet/sdk/NuGetFallbackFolder"
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "/home/jon/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\bil8068\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.1"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "netcoreapp2.1": {
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\bil8068\\OneDrive - HCA Healthcare\\Projects\\dvgen\\Rhetos.Utilities\\Rhetos.Utilities.csproj": {
+              "projectPath": "C:\\Users\\bil8068\\OneDrive - HCA Healthcare\\Projects\\dvgen\\Rhetos.Utilities\\Rhetos.Utilities.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -719,6 +761,10 @@
     "frameworks": {
       "netcoreapp2.1": {
         "dependencies": {
+          "CommandLineParser.Core": {
+            "target": "Package",
+            "version": "(, )"
+          },
           "Microsoft.NETCore.App": {
             "target": "Package",
             "version": "[2.1.0, )",

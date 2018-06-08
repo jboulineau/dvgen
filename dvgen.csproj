@@ -1,8 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
-
+  <ItemGroup>
+    <ProjectReference Include="Rhetos.Utilities\Rhetos.Utilities.csproj"/>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="CommandLineParser.Core" Version="*"/>
+  </ItemGroup>
 </Project>

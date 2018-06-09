@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 
-namespace Dvgen.Model
+namespace dvgen.Model
 {
     public class Table
     {
       public string Name;
-      public IEnumerable<Attribute> Attributes; 
+      public string Type;
+      //public IEnumerable<Attribute> Attributes; 
     }
 }

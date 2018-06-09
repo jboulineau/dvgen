@@ -1,4 +1,4 @@
-namespace dvgen.model
+namespace dvgen.Model
 {
     public class Index
     {

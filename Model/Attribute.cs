@@ -1,4 +1,4 @@
-namespace dvgen.model
+namespace Dvgen.Model
 {
     public class Attribute
     {

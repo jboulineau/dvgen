@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace dvgen.model
+namespace Dvgen.Model
 {
     public class Table
     {

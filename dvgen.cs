@@ -1,7 +1,7 @@
 ﻿using System;
 using CommandLineParser.Core;
 
-namespace dvgen
+namespace Dvgen
 {
     public class CommandLineArguments 
     {

@@ -26,42 +26,46 @@ namespace dvgen.Repositories
         {
             var entities = new List<Entity>();
             var count = 0;
-            
+
             // Create a json schema for the Entity class
             var generator = new JSchemaGenerator();
             var schema = generator.Generate(typeof(Entity));
-            
-            Console.WriteLine("Loading input files ... ");
 
+            Console.WriteLine("Loading input files ... ");
             var files = Directory.GetFiles(path);
+
             var bar = new ProgressBar(files.Length);
 
-            // Read each file in the provided path
             foreach (var f in files)
             {
-                bar.Refresh(count, f);
+                if (_config.Verbose) { Console.WriteLine(String.Concat("Loading input file : ", f)); }
+                
+                bar.Refresh(count, Path.GetFileName(f));
 
                 var json = String.Join("", File.ReadAllLines(f));
 
-                if(ValidateJSON(json,schema))
+                if (ValidateJSON(json, schema))
                 {
                     var entity = JsonConvert.DeserializeObject<Entity>(json);
-                    entities.Add(entity);
+                    entities.Add(entity); // TODO: Implement Entity validation (i.e. data types, etc.)
                 }
                 else
                 {
-                    if (_config.Verbose) { Console.WriteLine(String.Format("{0} is not a dvgen configuration file.", f)); }
+                    if (_config.Verbose) { Console.WriteLine(String.Format("{0} is not a valid dvgen configuration file.", f)); }
                 }
-                
-                // TODO: Implement Entity validation (i.e. data types, etc.)
-                
+
                 count++;
-                bar.Refresh(count, f);
+                bar.Refresh(count, Path.GetFileName(f));
             }
 
             return entities;
         }
 
+        /// <Summary>
+        /// Convenience function to encapsulate logic required to validate that a file contains valid Entity configuration data.
+        /// </Summary>
+        /// <param name="json">A string of json to be validated.</param>
+        /// <param name="schema">A string containing a json schema against which the <paramref name="json" /> parameter is to be validated.
         private bool ValidateJSON(string json, JSchema schema)
         {
             IList<string> errorMessages;

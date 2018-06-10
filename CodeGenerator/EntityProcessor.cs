@@ -15,7 +15,8 @@ namespace dvgen.CodeGenerator
         /// <param name="config">The dvgen configuration object.</param>
         public void Process(ICollection<Entity> entities, ConfigSettings config)
         {
-            var _udtGen = new UDTGenerator();
+
+            var _udtGen = new UDTGenerator(config);
 
             // TODO: To be safe, make sure all directories have been prepared based on config.
             Console.WriteLine("Generating code ...");
@@ -28,7 +29,7 @@ namespace dvgen.CodeGenerator
                 bar.Refresh(count, entity.Name);
 
                 if (config.Verbose) { Console.WriteLine(String.Concat("Generating UDT script for ", entity.Name)); }
-                var udt = _udtGen.GenerateScript(entity, config);
+                var udt = _udtGen.GenerateScript(entity);
 
                 count++;
                 bar.Refresh(count, entity.Name);

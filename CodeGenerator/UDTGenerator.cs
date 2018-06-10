@@ -5,19 +5,26 @@ using Rhetos.Utilities;
 
 namespace dvgen.CodeGenerator
 {
-    public class UDTGenerator : IGenerator
+    public class UDTGenerator : Generator 
     {
-        public Script GenerateScript(Entity entity, ConfigSettings config)
+        public UDTGenerator(ConfigSettings config) : base(config, ScriptTypeEnum.UDT) {}
+        
+        public Script GenerateScript(Entity entity)
         {
-            var _text = "foo";
+            var udtName = String.Concat("udt_",entity.Name);            
+            _replacer.Replace("{%UDT_NAME%}",udtName);
 
-            var _template = String.Join("", File.ReadAllLines(String.Concat(config.TemplatePath, "/UDT")));
-            Console.WriteLine(_template);
+            _replacer.Replace("{%TYPED_COL_LIST%}",GetTypedColumnList(entity));
             
+            Console.WriteLine(_replacer.ToString());
+
+            // {%UDT_NAME%}
+            // {%TYPED_COL_LIST%}
+
             return new Script()
             {
                 Type = ScriptTypeEnum.UDT,
-                Body = _text
+                Body = _replacer.ToString()
             };
         }
     }

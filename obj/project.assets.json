@@ -246,16 +246,6 @@
         "runtime": {
           "lib/netstandard2.0/Newtonsoft.Json.Schema.dll": {}
         }
-      },
-      "Rhetos.Utilities/1.0.0": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v2.0",
-        "compile": {
-          "bin/placeholder/Rhetos.Utilities.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Rhetos.Utilities.dll": {}
-        }
       }
     }
   },
@@ -792,11 +782,6 @@
         "newtonsoft.json.schema.3.0.10.nupkg.sha512",
         "newtonsoft.json.schema.nuspec"
       ]
-    },
-    "Rhetos.Utilities/1.0.0": {
-      "type": "project",
-      "path": "Rhetos.Utilities/Rhetos.Utilities.csproj",
-      "msbuildProject": "Rhetos.Utilities/Rhetos.Utilities.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -805,8 +790,7 @@
       "Goblinfactory.Konsole.ProgressBar.Core",
       "Microsoft.NETCore.App >= 2.1.0",
       "Newtonsoft.Json >= 11.0.2",
-      "Newtonsoft.Json.Schema >= 3.0.10",
-      "Rhetos.Utilities >= 1.0.0"
+      "Newtonsoft.Json.Schema >= 3.0.10"
     ]
   },
   "packageFolders": {
@@ -838,11 +822,7 @@
       },
       "frameworks": {
         "netcoreapp2.1": {
-          "projectReferences": {
-            "C:\\Users\\Jon\\SkyDrive\\Projects\\dvgen\\Rhetos.Utilities\\Rhetos.Utilities.csproj": {
-              "projectPath": "C:\\Users\\Jon\\SkyDrive\\Projects\\dvgen\\Rhetos.Utilities\\Rhetos.Utilities.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {

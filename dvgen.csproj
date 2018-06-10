@@ -4,12 +4,9 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="Rhetos.Utilities\Rhetos.Utilities.csproj"/>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="CommandLineParser.Core" Version="*"/>
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2"/>
-    <PackageReference Include="Goblinfactory.Konsole.ProgressBar.Core" Version="*"/>
-    <PackageReference Include="Newtonsoft.Json.Schema" Version="3.0.10"/>
+    <PackageReference Include="CommandLineParser.Core" Version="*" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Goblinfactory.Konsole.ProgressBar.Core" Version="*" />
+    <PackageReference Include="Newtonsoft.Json.Schema" Version="3.0.10" />
   </ItemGroup>
 </Project>

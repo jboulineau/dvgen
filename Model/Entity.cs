@@ -6,8 +6,9 @@ namespace dvgen.Model
     public class Entity
     {
       public string Name;
+      public string Schema;
       public string Type;
-      public IEnumerable<Column> Columns;
+      public ICollection<Column> Columns;
       public string[] Links;
 
       // Mostly just for testing

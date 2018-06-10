@@ -6,7 +6,11 @@ namespace dvgen
 {
     public class EnvironmentManager
     {
-        private IList<String> _directories;
+
+        public Dictionary<string, string> Directories {get; private set;}
+        
+        //private Dictionary<string, string> Directories;
+
         private ConfigSettings _config;
 
         /// <Summary>
@@ -19,13 +23,13 @@ namespace dvgen
 
             // TODO: Should this be more configurable?
             // Set up the list of directories required by the code generator.
-            _directories = new List<String> {
-                Path.GetFullPath(String.Concat(_config.OutputPath, "/UDT")),
-                Path.GetFullPath(String.Concat(_config.OutputPath, "/Procedures")),
-                Path.GetFullPath(String.Concat(_config.OutputPath, "/Tables")),
-                Path.GetFullPath(String.Concat(String.Concat(_config.OutputPath, "/Tables"), "/Hubs")),
-                Path.GetFullPath(String.Concat(String.Concat(_config.OutputPath, "/Tables"), "/Links")),
-                Path.GetFullPath(String.Concat(String.Concat(_config.OutputPath, "/Tables"), "/Satellites"))
+            Directories = new Dictionary<string, string> {
+                { "udt",Path.GetFullPath(String.Concat(_config.OutputPath, "/UDT")) },
+                { "table", Path.GetFullPath(String.Concat(_config.OutputPath, "/Tables")) },
+                { "procedure", Path.GetFullPath(String.Concat(_config.OutputPath, "/Procedures")) },
+                { "hub_table", Path.GetFullPath(String.Concat(_config.OutputPath, "/Tables", "/Hubs")) },
+                { "link_table", Path.GetFullPath(String.Concat(_config.OutputPath, "/Tables", "/Links")) },
+                { "satellite_table", Path.GetFullPath(String.Concat(_config.OutputPath, "/Tables", "/Satellites")) }
             };
         }
 
@@ -34,12 +38,12 @@ namespace dvgen
         /// </Summary>
         public void CreateDirectories()
         {
-            foreach (var dir in _directories)
+            foreach (var dir in Directories)
             {
-                if (!Directory.Exists(dir))
+                if (!Directory.Exists(dir.Value))
                 {
                     if (_config.Verbose) { Console.WriteLine(String.Concat("Creating Directory : ", dir)); }
-                    Directory.CreateDirectory(dir);
+                    Directory.CreateDirectory(dir.Value);
                 }
                 else
                 {
@@ -50,23 +54,23 @@ namespace dvgen
 
         public void RemoveDirectories()
         {
-            foreach (var dir in _directories)
+            foreach (var dir in Directories)
             {
-                if (Directory.Exists(dir))
+                if (Directory.Exists(dir.Value))
                 {
                     // Remove subdirectories
                     // TODO: Make this recursive so it can handle hierarchies more than one-deep
                     // TODO: Fix minor bug that causes Table subdirectories to be iterated over twice
-                    foreach (var subdir in Directory.GetDirectories(dir))
+                    foreach (var subdir in Directory.GetDirectories(dir.Value))
                     {
-                        DeleteDirectory(subdir);   
+                        DeleteDirectory(subdir);
                     }
 
-                    DeleteDirectory(dir);
+                    DeleteDirectory(dir.Value);
                 }
                 else
                 {
-                    if (_config.Verbose) { Console.WriteLine("Directory {0} does not exist, skipping. ", dir); }
+                    if (_config.Verbose) { Console.WriteLine("Directory {0} does not exist, skipping. ", dir.Value); }
                 }
             }
         }
@@ -81,7 +85,7 @@ namespace dvgen
                 File.Delete(file);
             }
 
-            if (_config.Verbose) { Console.WriteLine(String.Concat("Deleting directory : ", path)); }            
+            if (_config.Verbose) { Console.WriteLine(String.Concat("Deleting directory : ", path)); }
             Directory.Delete(path);
         }
     }

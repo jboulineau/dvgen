@@ -1,4 +1,0 @@
-CREATE TYPE {%UDT_NAME%} AS TABLE   
-( 
-    {%TYPED_COL_LIST%}
-);  

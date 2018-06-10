@@ -3,88 +3,106 @@ using System.IO;
 using System.Text;
 using dvgen.Model;
 using Rhetos.Utilities;
+using System.Collections.Generic;
 
 namespace dvgen.CodeGenerator
 {
-    public abstract class Generator
+    public class Generator
     {
-        protected FastReplacer _replacer;
-        protected ConfigSettings _config;
-        protected string _template;
-
-        protected Generator(ConfigSettings config, ScriptTypeEnum type)
+        public Script Generate(Entity entity, Template template, bool verbose)
         {
-            _config = config;
-            SetTemplate(type);
-            CreateReplacer();
+            if (verbose) { Console.WriteLine(String.Format("Generating {0} script for {1}", template.Name, entity.Name)); }
+            
+            var replacer = GetReplacer(template.Body);
+
+            // Attempt all known token replacement operations.
+            // TODO: It would be faster to separate by template type, because not all tokens are found in every template.
+            // This is, however, much simpler.
+
+            // Base tokens
+            replacer.Replace("{%SCHEMA%}", entity.Schema.ToLower());
+            
+            // API tokens
+            replacer.Replace("{%API_UDT_NAME%}", String.Concat("udt_", entity.Name));
+            replacer.Replace("{%API_TYPED_COL_LIST%}", GetEntityColumnList(entity, true,false));
+
+            // Hub tokens
+            replacer.Replace("{%HUB_UDT_NAME%}", String.Concat("udt_", entity.Name, "_h"));
+            replacer.Replace("{%HUB_TABLE_NAME%}",String.Concat(entity.Name,"_h"));
+            replacer.Replace("{%HUB_INSERT_PROC_NAME%}",String.Concat("usp_",entity.Name,"_insert_h"));
+
+            return new Script
+            {
+                Type = TranslateToScriptType(template.Name),
+                Name = String.Concat(entity.Name,"_",template.Name),
+                Body = replacer.ToString()
+            };
         }
 
-        protected string GetTypedColumnList(Entity entity)
+        // TODO: This seems like a big hack
+        private ScriptType TranslateToScriptType(string name)
         {
-            var sb = new StringBuilder();
+            ScriptType output = ScriptType.api_udt;
+
+            switch (name)
+            {
+                case "api_udt":
+                    output = ScriptType.api_udt;
+                    break;
+                case "hub_udt":
+                    output = ScriptType.hub_udt;
+                    break;
+                case "link_udt":
+                    output = ScriptType.link_udt;
+                    break;
+                case "hub_table":
+                    output = ScriptType.hub_table;
+                    break; 
+            }
+
+            return output;
+        }
+
+        private string GetEntityColumnList(Entity entity, bool typed, bool removeTrailingComma = true)
+        {
+            var cols = new List<string>();
 
             foreach (var c in entity.Columns)
             {
-                sb.AppendLine(String.Concat(c.Name, " ", c.DataType, ","));
+                if (typed)
+                {
+                    cols.Add(String.Concat(c.Name, " ", c.DataType, ","));
+                }
+                else
+                {
+                    cols.Add(String.Concat(c.Name, ","));
+                }
             }
 
-            return sb.ToString();
-        }
-
-        protected string GetUntypedColumnList(Entity entity)
-        {
-            var sb = new StringBuilder();
-
-            foreach (var c in entity.Columns)
+            if(removeTrailingComma)
             {
-                sb.AppendLine(String.Concat(c.Name, " ", c.DataType, ","));
+                cols[cols.Count - 1] = cols[cols.Count - 1].Replace(',', ' ');
             }
 
-            return sb.ToString();
-        }
-
-        private void SetTemplate(ScriptTypeEnum type)
-        {
-            if (type == ScriptTypeEnum.UDT)
-            {
-                _template = GetTemplate("udt");
-            }
-            else if (type == ScriptTypeEnum.Hub)
-            {
-                _template = GetTemplate("hub");
-            }
-        }
-
-        private string GetTemplate(string name)
-        {
-            var path = Path.GetFullPath(String.Concat(_config.TemplatePath, "/", name));
-
-            if (File.Exists(path))
-            {
-                if (_config.Verbose) { Console.WriteLine(String.Concat("Loading template file : ", path)); }
-                return String.Join("", File.ReadAllLines(path));
-            }
-            else
-            {
-                throw new Exception(String.Format("Template expected at {0} was not found", path));
-            }
+            return String.Join("", cols.ToArray());
         }
 
         /// <Summary>
         /// Convenience method to instantiate a FastReplacer option and 'hydrate' it with the lines of the template file.
         /// At the completion of execution, token replacement can begin.
         /// </Summary>
-        private void CreateReplacer()
+        private FastReplacer GetReplacer(string template)
         {
-            _replacer = new FastReplacer("{%", "%}");
-            Console.WriteLine(_template);
+            var output = new FastReplacer("{%", "%}");
 
-            var lines = _template.Split(Environment.NewLine, StringSplitOptions.None);
+            var lines = template.Split(Environment.NewLine, StringSplitOptions.None);
 
             foreach (string line in lines)
             {
-                _replacer.Append(line);
+                output.Append(line);
             }
+
+            return output;
         }
     }
 }

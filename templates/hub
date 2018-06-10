@@ -1,5 +1,0 @@
-CREATE PROCEDURE {%PROC_NAME%} 
-AS
-(
-    
-)

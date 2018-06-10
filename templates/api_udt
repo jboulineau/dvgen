@@ -1,0 +1,4 @@
+CREATE TYPE {%SCHEMA%}.{%API_UDT_NAME%} AS TABLE 
+( 
+    {%API_TYPED_COL_LIST%}
+);  

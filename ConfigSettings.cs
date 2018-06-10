@@ -8,23 +8,32 @@ namespace dvgen
     /// </Summary>
     public class ConfigSettings
     {
+
+        public bool Overwrite { get; set; }
+        public bool Clean { get; set; }
         public bool Verbose { get; set; }
-        public string InputPath 
-        { 
-            get { return _inputPath; }
-            set { _inputPath = GetValidatedPath(value); } 
+        public string TemplatePath
+        {
+            get { return _templatePath; }
+            set { _templatePath = GetValidatedPath(value); }
         }
-        
-        public string OutputPath 
-        { 
+        public string InputPath
+        {
+            get { return _inputPath; }
+            set { _inputPath = GetValidatedPath(value); }
+        }
+
+        public string OutputPath
+        {
             get { return _outputPath; }
-            set { _outputPath = GetValidatedPath(value); } 
+            set { _outputPath = GetValidatedPath(value); }
         }
         public bool ValidationErrors { get; private set; }
 
         private string _inputPath;
         private string _outputPath;
-        
+        private string _templatePath;
+
         /// <Summary>
         /// A method to validate filesystem paths passed as arguments.
         /// </Summary>

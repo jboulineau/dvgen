@@ -1,14 +1,17 @@
 using System;
+using Konsole;
 using System.IO;
 using dvgen.Model;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Schema;
 using System.Collections.Generic;
-using Konsole;
+using Newtonsoft.Json.Schema.Generation;
 
 namespace dvgen.Repositories
 {
     public class EntityRepository
-    {   
+    {
         private ConfigSettings _config;
 
         public EntityRepository(ConfigSettings config)
@@ -23,33 +26,47 @@ namespace dvgen.Repositories
         {
             var entities = new List<Entity>();
             var count = 0;
-
+            
+            // Create a json schema for the Entity class
+            var generator = new JSchemaGenerator();
+            var schema = generator.Generate(typeof(Entity));
+            
             Console.WriteLine("Loading input files ... ");
 
-            var files = Directory.GetFiles(path);            
+            var files = Directory.GetFiles(path);
             var bar = new ProgressBar(files.Length);
-            
+
             // Read each file in the provided path
-            foreach(var f in files)
+            foreach (var f in files)
             {
                 bar.Refresh(count, f);
 
-                try 
+                var json = String.Join("", File.ReadAllLines(f));
+
+                if(ValidateJSON(json,schema))
                 {
-                    var json = String.Join("", File.ReadAllLines(f));
-                    var entity = JsonConvert.DeserializeObject<Entity>(json);                    
+                    var entity = JsonConvert.DeserializeObject<Entity>(json);
                     entities.Add(entity);
                 }
-                catch
+                else
                 {
-                    if (_config.Verbose) { Console.WriteLine(String.Format("{0} is not a dvgen configuration file.",f)); }
+                    if (_config.Verbose) { Console.WriteLine(String.Format("{0} is not a dvgen configuration file.", f)); }
                 }
-
+                
+                // TODO: Implement Entity validation (i.e. data types, etc.)
+                
                 count++;
                 bar.Refresh(count, f);
             }
 
             return entities;
+        }
+
+        private bool ValidateJSON(string json, JSchema schema)
+        {
+            IList<string> errorMessages;
+            JObject jo = JObject.Parse(json);
+            return jo.IsValid(schema, out errorMessages);
         }
     }
 }

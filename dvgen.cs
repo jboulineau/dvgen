@@ -5,56 +5,17 @@ using CommandLineParser.Core;
 
 namespace dvgen
 {
-    /// <Summary>
-    /// Used by CommandLineParser to establish definitions of the allowed program arguments.
-    /// </Summary>
-    public class CommandLineArguments
-    {
-        private string _inputPath;
-        public string InputPath 
-        { 
-            get { return _inputPath; }
-            set { _inputPath = GetValidatedPath(value); } 
-        }
-
-        private string _outputPath;
-        public string OutputPath 
-        { 
-            get { return _outputPath; }
-            set { _outputPath = GetValidatedPath(value); } 
-        }
-
-        public bool ValidationErrors { get; private set; }
-        
-        #region Methods
-
-        /// <Summary>
-        /// A method to validate filesystem paths passed as arguments.
-        /// </Summary>
-        private string GetValidatedPath(string path)
-        {
-            var _absPath = Path.GetFullPath(path);
-
-            if (!Directory.Exists(_absPath))
-            {
-                Console.WriteLine(String.Format("The path does not exist: {0}", _absPath));
-                ValidationErrors = true;
-                return null;
-            }
-            return _absPath;
-        }
-        #endregion
-    }
-
     public class Program
     {
-        private static FluentCommandLineParser<CommandLineArguments> parser = new FluentCommandLineParser<CommandLineArguments>();
+        private static FluentCommandLineParser<ConfigSettings> parser = new FluentCommandLineParser<ConfigSettings>();
 
         /// <Summary>
         /// dvgen is a code generator for the objects required to implement a database in the Data Vault pattern.
         /// </Summary>
         /// <remarks>
-        /// Documentation for CommandLineParser found here: https://github.com/valeravorobjev/CommandLineParser/tree/master/CommandLineParser.Core
+        /// Dependencies -
+        /// CommandLineParser : https://github.com/valeravorobjev/CommandLineParser/tree/master/CommandLineParser.Core
+        /// Konsole : https://github.com/goblinfactory/konsole
         /// </remarks>
         static void Main(string[] args)
         {
@@ -72,7 +33,7 @@ namespace dvgen
 
         private static void LoadEntities(string path)
         {
-            EntityRepository er = new EntityRepository();
+            EntityRepository er = new EntityRepository(parser.Object);
             er.LoadEntities(path);
         }
 
@@ -94,6 +55,11 @@ namespace dvgen
                 .As('o', "output")
                 .SetDefault("output")
                 .WithDescription("The path to the directory where generated files will be written. Default value: 'output'");
+
+            parser.Setup(a => a.Verbose)
+                .As('v',"verbose")
+                .SetDefault(false)
+                .WithDescription("Determines if verbose output will be printed. Default value: 'false'");
         }
     }
 }

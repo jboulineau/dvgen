@@ -1,0 +1,11 @@
+{
+  "Name": "Customer",
+  "Type": "base",
+  "Columns": [
+    { "Name" : "CustomerName", "DataType": "VARCHAR(20)", "PrimaryKey": true},
+    { "Name" : "Description", "DataType" : "VARCHAR(100)", "PrimaryKey": false}
+  ],
+  "Links": [
+    "Account"
+  ]
+}

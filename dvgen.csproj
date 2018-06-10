@@ -9,5 +9,6 @@
   <ItemGroup>
     <PackageReference Include="CommandLineParser.Core" Version="*"/>
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2"/>
+    <PackageReference Include="Goblinfactory.Konsole.ProgressBar.Core" Version="*"/>
   </ItemGroup>
 </Project>

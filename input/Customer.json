@@ -1,0 +1,20 @@
+{
+  "Name": "Acme",
+  "Schema": "customer",
+  "Type": "Foo",
+  "Columns": [
+    {
+      "Name": "CustomerID",
+      "DataType": "INT",
+      "PrimaryKey": true
+    },
+    {
+      "Name": "CustomerName",
+      "DataType": "VARCHAR(100)",
+      "PrimaryKey": false
+    }
+  ],
+  "Links": [
+    "Account"
+  ]
+}

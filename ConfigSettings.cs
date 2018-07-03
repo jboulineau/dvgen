@@ -12,6 +12,8 @@ namespace dvgen
         public bool Overwrite { get; set; }
         public bool Clean { get; set; }
         public bool Verbose { get; set; }
+        public bool StopOnValidationError { get; set; }
+        
         public string TemplatePath
         {
             get { return _templatePath; }
@@ -28,8 +30,8 @@ namespace dvgen
             get { return _outputPath; }
             set { _outputPath = GetValidatedPath(value); }
         }
+        
         public bool ValidationErrors { get; private set; }
-
         private string _inputPath;
         private string _outputPath;
         private string _templatePath;

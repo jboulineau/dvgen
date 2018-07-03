@@ -14,14 +14,14 @@ namespace dvgen.CodeGenerator
         /// </Summary>
         /// <param name="entities">A collection of <c>Entity</c> objects for which code is to be generated.</param>
         /// <param name="config">The dvgen configuration object.</param>
-        public void Process(string templatePath, string inputPath, Dictionary<string, string> directories, bool verbose)
+        public void Process(string templatePath, string inputPath, Dictionary<string, string> directories, bool verbose, bool stopOnErrors)
         {
             var generator = new Generator();
             var eRepo = new EntityRepository();
             var tRepo = new TemplateRepository();
 
-            var entities = eRepo.GetEntities(inputPath, verbose);
-            var templates = tRepo.GetTemplates(templatePath, verbose);
+            var entities = eRepo.GetEntities(inputPath, verbose, stopOnErrors);
+            var templates = tRepo.GetTemplates(templatePath, verbose, directories);
 
             Console.WriteLine("Generating code ...");
             var bar = new ProgressBarSlim(entities.Count);
@@ -35,8 +35,7 @@ namespace dvgen.CodeGenerator
                 foreach (var template in templates)
                 {
                     var script = generator.Generate(entity, template, verbose);
-                    WriteScript(script, directories);
-                    // if (verbose) { Console.WriteLine(script.Body); }
+                    WriteScript(script, directories, verbose);
                 }
 
                 count++;
@@ -44,26 +43,14 @@ namespace dvgen.CodeGenerator
             }
         }
 
-        private void WriteScript(Script script, Dictionary<string, string> directories)
+        ///<Summary>
+        ///Write the generated script to a file.
+        ///</Summary>
+        private void WriteScript(Script script, Dictionary<string, string> directories, bool verbose)
         {
-            var path = String.Concat(GetOutputDir(script.Type, directories), "/", script.Name, ".sql");
-            File.WriteAllText(path, script.Body);
-        }
-
-        private String GetOutputDir(ScriptType type, Dictionary<string, string> directories)
-        {
-            var output = "";
-
-            // TODO: Fix this awful mess
-            if (type == ScriptType.api_udt || type == ScriptType.hub_udt || type == ScriptType.link_udt) 
-                { output = directories.GetValueOrDefault("udt"); }
-            else if (type == ScriptType.hub_table || type == ScriptType.link_table || type == ScriptType.satellite_table) 
-                { output = directories.GetValueOrDefault("table"); }
-            else if (type == ScriptType.hub_insert || type == ScriptType.hub_delete || type == ScriptType.link_delete || type == ScriptType.link_insert 
-                    || type == ScriptType.satellite_delete || type == ScriptType.satellite_insert) 
-                { output = directories.GetValueOrDefault("procedure"); }
-
-            return output;
+            var path = String.Concat(directories.GetValueOrDefault(script.TemplateName), "\\", script.Name, ".sql");
+            if (verbose) { Console.WriteLine(String.Concat("Writing script: path")); }
+            File.WriteAllText(path, script.Body); //TODO: This should probably have error handling
         }
     }
 }

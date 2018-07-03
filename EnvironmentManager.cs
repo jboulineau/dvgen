@@ -21,15 +21,15 @@ namespace dvgen
         {
             _config = config;
 
-            // TODO: Should this be more configurable?
-            // Set up the list of directories required by the code generator.
+            // TODO: Should this be externalized? And is it a good idea to use filenames to drive logic?
+            // Set up the list of directories required by the code generator. 
             Directories = new Dictionary<string, string> {
-                { "udt",Path.GetFullPath(String.Concat(_config.OutputPath, "/UDT")) },
-                { "table", Path.GetFullPath(String.Concat(_config.OutputPath, "/Tables")) },
-                { "procedure", Path.GetFullPath(String.Concat(_config.OutputPath, "/Procedures")) },
-                { "hub_table", Path.GetFullPath(String.Concat(_config.OutputPath, "/Tables", "/Hubs")) },
-                { "link_table", Path.GetFullPath(String.Concat(_config.OutputPath, "/Tables", "/Links")) },
-                { "satellite_table", Path.GetFullPath(String.Concat(_config.OutputPath, "/Tables", "/Satellites")) }
+                { "api_udt",Path.GetFullPath(String.Concat(_config.OutputPath, "\\UDT")) },
+                { "hub_table", Path.GetFullPath(String.Concat(_config.OutputPath, "\\Tables")) },
+                { "hub_insert", Path.GetFullPath(String.Concat(_config.OutputPath, "\\Procedures")) }
+                // { "hub_table", Path.GetFullPath(String.Concat(_config.OutputPath, "/Tables", "/Hubs")) },
+                // { "link_table", Path.GetFullPath(String.Concat(_config.OutputPath, "/Tables", "/Links")) },
+                // { "satellite_table", Path.GetFullPath(String.Concat(_config.OutputPath, "/Tables", "/Satellites")) }
             };
         }
 

@@ -60,7 +60,7 @@ namespace dvgen
         {
             // Generate code
             var _processor = new EntityProcessor();            
-            _processor.Process(config.TemplatePath, config.InputPath, _envManager.Directories, config.Verbose);
+            _processor.Process(config.TemplatePath, config.InputPath, _envManager.Directories, config.Verbose, config.StopOnValidationError);
         }
 
         private static void PostProcess(ConfigSettings config)
@@ -108,6 +108,11 @@ namespace dvgen
                 .As('t', "template")
                 .SetDefault("templates")
                 .WithDescription("The location where script templates are stored. Default value: 'templates'");
+
+            parser.Setup(a => a.StopOnValidationError)
+                .As('s',"stop")
+                .SetDefault(false)
+                .WithDescription("Problems with an input file with stop all processing.");
             
             return parser;
         }

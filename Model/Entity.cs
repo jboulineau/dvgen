@@ -8,7 +8,7 @@ namespace dvgen.Model
       public string Name;
       public string Schema;
       public string Type;
-      public ICollection<Column> Columns;
+      public IList<Column> Columns;
       public string[] Links;
 
       // Mostly just for testing

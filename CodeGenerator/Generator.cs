@@ -6,6 +6,7 @@ using dvgen.Model;
 using Rhetos.Utilities;
 using System.Collections.Generic;
 using dvgen.CodeGenerator.Tokens;
+using PoorMansTSqlFormatterLib;
 
 namespace dvgen.CodeGenerator
 {
@@ -40,12 +41,15 @@ namespace dvgen.CodeGenerator
         replacer.Replace(token.TokenString, token.GetCode(entity));
       }
 
+      var formatter = new SqlFormattingManager();
+      var scriptBody = formatter.Format(replacer.ToString());
+
       return new Script
       {
         OutputDirectory = template.OutputDirectory,
         Name = String.Concat(entity.Name, "_", template.Name),
         TemplateName = template.Name,
-        Body = replacer.ToString()
+        Body = scriptBody //replacer.ToString()
       };
     }
   }

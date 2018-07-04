@@ -18,9 +18,10 @@ namespace dvgen
         /// Dependencies -        
         /// JSON.NET : https://www.newtonsoft.com/json
         /// Konsole : https://github.com/goblinfactory/konsole
-        /// JSON.NET Schema : https://www.newtonsoft.com/jsonschema        
+        /// JSON.NET Schema : https://www.newtonsoft.com/jsonschema
         /// CommandLineParser : https://github.com/valeravorobjev/CommandLineParser/tree/master/CommandLineParser.Core
         /// Rhetos FastReplacer : https://github.com/Rhetos/Rhetos/blob/master/Source/Rhetos.Utilities/FastReplacer.cs
+        /// PoorMan'sTSQLFormatter : http://architectshack.com/PoorMansTSqlFormatter.ashx
         /// </remarks>
         static void Main(string[] args)
         {

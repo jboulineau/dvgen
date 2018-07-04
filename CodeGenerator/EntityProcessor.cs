@@ -24,13 +24,13 @@ namespace dvgen.CodeGenerator
             var templates = tRepo.GetTemplates(templatePath, verbose, directories);
 
             Console.WriteLine("Generating code ...");
-            var bar = new ProgressBarSlim(entities.Count);
 
             var count = 0;
+            var bar = new ProgressBarSlim(entities.Count);
 
             foreach (var entity in entities)
             {
-                bar.Refresh(count, entity.Name);
+                bar.Refresh(count, entity.Name);                
 
                 foreach (var template in templates)
                 {

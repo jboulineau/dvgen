@@ -1,0 +1,12 @@
+{
+  "Name": "Company",
+  "Type": "base",
+  "Schema": "company",
+  "Columns": [
+    { "Name" : "CompanyName", "DataType": "VARCHAR(20)", "PrimaryKey": true , "Null": false},
+    { "Name" : "Description", "DataType" : "VARCHAR(100)", "PrimaryKey": false,  "Null": false}
+  ],
+  "Links": [
+    "Account"
+  ]
+}

@@ -1,0 +1,13 @@
+
+// {
+//   "Name": "Account",
+//   "Type": "base",
+//   "Schema": "Customer",
+//   "Columns": [
+//     { "Name" : "AccountNumber", "DataType": "INT", "PrimaryKey": true},
+//     { "Name" : "AccountDescription", "DataType" : "VARCHAR(100)", "PrimaryKey": false}
+//   ],
+//   "Links": [
+//     "Customer"
+//   ]
+// }

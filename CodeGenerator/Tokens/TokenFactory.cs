@@ -20,6 +20,7 @@ namespace dvgen.CodeGenerator.Tokens
             // Hub Tokens
             output.Add(new HUB_TABLE_NAME("{%HUB_TABLE_NAME%}"));
             output.Add(new HUB_TABLE_TYPED_COLUMN_LIST("{%HUB_TABLE_TYPED_COLUMN_LIST%}"));
+            output.Add(new HUB_PRIMARY_KEY("{%HUB_PRIMARY_KEY%}"));
                         
             return output;
         }

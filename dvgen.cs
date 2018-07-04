@@ -27,7 +27,7 @@ namespace dvgen
         {
             // Configure FluentCommandLineParser
             // NOTE: Argument validation is handled in the ConfigSettings class
-            var parser = SetupParser();            
+            var parser = SetupParser();
             var result = parser.Parse(args);
 
             // No-op if the help menu is requested. 
@@ -35,7 +35,7 @@ namespace dvgen
             if (result.HasErrors) { Console.WriteLine(result.ErrorText); }
             // Quit if parameter validation issues occurred.
             if (parser.Object.ValidationErrors || result.HasErrors) { return; }
-           
+
             // Now that we have configuration, set up object(s) that we need.
             _envManager = new EnvironmentManager(parser.Object);
 
@@ -45,7 +45,7 @@ namespace dvgen
                 _envManager.RemoveDirectories();
                 return;
             }
-           
+
             // Do work           
             PreProcess(parser.Object);
             Process(parser.Object);
@@ -60,13 +60,13 @@ namespace dvgen
         private static void Process(ConfigSettings config)
         {
             // Generate code
-            var _processor = new EntityProcessor();            
+            var _processor = new EntityProcessor();
             _processor.Process(config.TemplatePath, config.InputPath, _envManager.Directories, config.Verbose, config.StopOnValidationError);
         }
 
         private static void PostProcess(ConfigSettings config)
         {
-            
+
         }
 
         /// <Summary>
@@ -111,10 +111,10 @@ namespace dvgen
                 .WithDescription("The location where script templates are stored. Default value: 'templates'");
 
             parser.Setup(a => a.StopOnValidationError)
-                .As('s',"stop")
+                .As('s', "stop")
                 .SetDefault(false)
                 .WithDescription("Problems with an input file with stop all processing.");
-            
+
             return parser;
         }
     }

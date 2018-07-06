@@ -23,9 +23,16 @@ namespace dvgen.CodeGenerator
     {
       if (verbose) { Console.WriteLine(String.Format("Generating {0} script for {1}", template.Name, entity.Name)); }
 
+      // Anticipating future features, create a configuration object to be passed to Token objects. 
+      // This will probably be refactored when features are implemented that require configuration.
+      var args = new Dictionary<string, string>();
+      // We will need to format the generated SQL to something legible
+      var formatter = new SqlFormattingManager();
+      
       // Create a new FastReplacer and hydrate it with the body of the template
       var replacer = new FastReplacer("{%", "%}");
       var lines = template.Body.Split(Environment.NewLine, StringSplitOptions.None);
+
       foreach (string line in lines)
       {
         replacer.Append(line);
@@ -38,18 +45,15 @@ namespace dvgen.CodeGenerator
 
       foreach (var token in tokens)
       {
-        replacer.Replace(token.TokenString, token.GetCode(entity));
+        replacer.Replace(token.TokenString, token.GetCode(entity, args));
       }
-
-      var formatter = new SqlFormattingManager();
-      var scriptBody = formatter.Format(replacer.ToString());
 
       return new Script
       {
-        OutputDirectory = template.OutputDirectory,
-        Name = String.Concat(entity.Name, "_", template.Name),
-        TemplateName = template.Name,
-        Body = scriptBody //replacer.ToString()
+          OutputDirectory = template.OutputDirectory,
+          Name = String.Concat(entity.Name, "_", template.Name),
+          TemplateName = template.Name,
+          Body = formatter.Format(replacer.ToString())
       };
     }
   }

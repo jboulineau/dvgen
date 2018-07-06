@@ -41,9 +41,13 @@ namespace dvgen.Repositories
                 if (errors.Count != 0)
                 {
                     Console.WriteLine (String.Concat ("Invalid dvgen model file : ", f));
-                    foreach (var e in errors)
+
+                    if(verbose)
                     {
-                        Console.WriteLine (e);
+                        foreach (var e in errors)
+                        {
+                            Console.WriteLine (e);
+                        }
                     }
 
                     // TODO: This should be handled by caller

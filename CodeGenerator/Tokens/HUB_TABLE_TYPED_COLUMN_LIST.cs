@@ -9,7 +9,7 @@ namespace dvgen.CodeGenerator.Tokens
   {
     public HUB_TABLE_TYPED_COLUMN_LIST(string tokenString) : base(tokenString) { }
 
-    public override string GetCode(Entity entity)
+    public override string GetCode(Entity entity, IDictionary<string,string> args)
     {
       return GetHubColumnList(entity.Columns,true,false);
     }

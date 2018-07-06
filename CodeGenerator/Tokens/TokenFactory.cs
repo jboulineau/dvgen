@@ -18,9 +18,11 @@ namespace dvgen.CodeGenerator.Tokens
             output.Add(new API_UDT_NAME("{%API_UDT_NAME%}"));
 
             // Hub Tokens
+            output.Add(new HUB_UNIQUE_KEY("{%HUB_UNIQUE_KEY%}"));
             output.Add(new HUB_TABLE_NAME("{%HUB_TABLE_NAME%}"));
-            output.Add(new HUB_TABLE_TYPED_COLUMN_LIST("{%HUB_TABLE_TYPED_COLUMN_LIST%}"));
             output.Add(new HUB_PRIMARY_KEY("{%HUB_PRIMARY_KEY%}"));
+            output.Add(new HUB_METADATA_COLUMNS("{%HUB_METADATA_COLUMNS%}"));
+            output.Add(new HUB_TABLE_TYPED_COLUMN_LIST("{%HUB_TABLE_TYPED_COLUMN_LIST%}"));
                         
             return output;
         }

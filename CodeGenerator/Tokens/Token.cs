@@ -21,7 +21,7 @@ namespace dvgen.CodeGenerator.Tokens
       TokenString = tokenString;
     }
 
-    public abstract string GetCode(Entity entity);
+    public abstract string GetCode(Entity entity,IDictionary<string,string> args);
 
     protected string GetEntityColumnList(IList<Column> cols, bool typed, bool removeTrailingComma = true)
     {

@@ -8,7 +8,7 @@ namespace dvgen.CodeGenerator.Tokens
   {
     public SCHEMA(string tokenString) : base(tokenString) { }
 
-    public override string GetCode(Entity entity)
+    public override string GetCode(Entity entity, IDictionary<string,string> args)
     {
       return String.Concat('[', entity.Schema, ']');
     }

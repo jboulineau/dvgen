@@ -794,23 +794,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Jon\\.nuget\\packages\\": {},
+    "C:\\Users\\bil8068\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Jon\\SkyDrive\\Projects\\dvgen\\dvgen.csproj",
+      "projectUniqueName": "c:\\Users\\bil8068\\OneDrive - HCA Healthcare\\Projects\\dvgen\\dvgen.csproj",
       "projectName": "dvgen",
-      "projectPath": "C:\\Users\\Jon\\SkyDrive\\Projects\\dvgen\\dvgen.csproj",
-      "packagesPath": "C:\\Users\\Jon\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Jon\\SkyDrive\\Projects\\dvgen\\obj\\",
+      "projectPath": "c:\\Users\\bil8068\\OneDrive - HCA Healthcare\\Projects\\dvgen\\dvgen.csproj",
+      "packagesPath": "C:\\Users\\bil8068\\.nuget\\packages\\",
+      "outputPath": "c:\\Users\\bil8068\\OneDrive - HCA Healthcare\\Projects\\dvgen\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Jon\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\bil8068\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
